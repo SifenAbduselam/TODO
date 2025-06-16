@@ -1,55 +1,75 @@
+// Selectors
+const todoInput = document.querySelector('.todo-input')
+const todoButton = document.querySelector('.todo-button')
+const todoList = document.querySelector('.todo-list')
 
 
 
-const taskInput = document.getElementById('taskInput')
-const addTaskBtn = document.getElementById('addTaskBtn')
-const taskList = document.getElementById('taskList')
+// EventListeners
+todoButton.addEventListener('click', addTodo);
+todoList.addEventListener('click', deleteCheck)
 
-const tasks = [];
-addTaskBtn.addEventListener('click', () =>{
-    const taskText = taskInput.value
+// Functions this function is called when sth happened 
+// and the thing that happens is called event 
+function addTodo(event){
 
-    if(taskText === "") {
-        alert("please enter task")
-        return
+    event.preventDefault();
+// TODO DIV
+const todoDiv = document.createElement('div')
+todoDiv.classList.add('todo')
+// Create LI
+const newTodo = document.createElement('li')
+
+// to safely show user tasks innerText
+newTodo.innerText = todoInput.value;
+
+newTodo.classList.add('todo-item')
+todoDiv.appendChild(newTodo) 
+
+
+// CHECKMARK BUTTON
+const completedButton = document.createElement('button')
+completedButton.innerHTML = 'C';
+completedButton.classList.add("complete-btn");
+todoDiv.appendChild(completedButton)
+
+
+// trash buttn
+
+const trashButton = document.createElement('button')
+trashButton.innerHTML = 'D';
+trashButton.classList.add("trash-btn");
+todoDiv.appendChild(trashButton)
+
+// APPEND TO LIST
+todoList.appendChild(todoDiv)
+// clear TODO INPUT VALUE
+
+todoInput.value = ""
+
+}
+
+
+function deleteCheck(e)
+{
+    const item = e.target;
+
+    if(item.classList[0] === "trash-btn"){
+        const todo = item.parentElement;
+
+        // Animation
+        todo.classList.add("fall")
+        todo.addEventListener('transitioned', function() {
+            todo.remove();
+
+        })
     }
 
-    tasks.push(taskText)
-   
 
-    const li = document.createElement('li')
-    li.textContent = taskText;
-
-
-
-
-
-const dBtn = document.createElement('button')
- dBtn.textContent = 'Delete'
-dBtn.addEventListener('click', () =>{
-     li.remove()
-})
-
-
-const editBtn = document.createElement('button')
-editBtn.textContent = 'Edit'
-
-editBtn.addEventListener('click', () => {
-    const newText = prompt("Edit your task:" , li.textContent)
-    if(newText !== ''){
-        li.textContent = newText;
-        li.appendChild(editBtn)
-    }
-})
-   
-
-
-
-
-
- li.appendChild(dBtn)
- taskList.appendChild(li)
-    taskInput.value = ""
-
-
-})
+    // CHECKMARK
+ 
+if(item.classList[0] === "complete-btn") {
+    const todo = item.parentElement;
+    todo.classList.toggle("completed-btn")
+}
+}
