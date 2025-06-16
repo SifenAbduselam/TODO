@@ -5,7 +5,7 @@ const todoList = document.querySelector('.todo-list')
 
 
 
-// EventListeners
+//  add an EventListeners
 todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteCheck)
 
@@ -67,7 +67,7 @@ function deleteCheck(e)
 
 
     // CHECKMARK
- 
+//  checkmark
 if(item.classList[0] === "complete-btn") {
     const todo = item.parentElement;
     todo.classList.toggle("completed-btn")
